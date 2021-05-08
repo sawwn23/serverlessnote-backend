@@ -6,7 +6,7 @@ export const update = handler(async (event, context) => {
     const params = {
         TableName : process.env.tableName,
         Key: {
-            userID: "100", // id of the auth user
+            userID: event.requestContext.identity.cognitoIdentityId, // id of the auth user
             noteID: event.pathParameters.id,
         },
         UpdateExpression: "SET content = :content, attachment = :attachment",

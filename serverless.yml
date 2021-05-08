@@ -42,30 +42,35 @@ functions:
       - http:
           path: v1/notes
           method: POST
+          authorizer: aws_iam
   get:
     handler: src/functions/get.get
     events:
       - http:
           path: v1/notes/{id}
           method: get
+          authorizer: aws_iam
   list:
     handler: src/functions/list.list
     events:
       - http:
           path: v1/notes
           method: get
+          authorizer: aws_iam
   update:
     handler: src/functions/update.update
     events:
       - http:
           path: v1/notes/{id}
           method: put
+          authorizer: aws_iam
   delete:
     handler: src/functions/delete.deleteNote
     events:
       - http:
           path: v1/notes/{id}
           method: delete
+          authorizer: aws_iam
 # you can add CloudFormation resource templates here
 #resources:
 #  Resources:

@@ -6,7 +6,7 @@ export const list = handler(async(event, context) => {
         TableName : process.env.tableName,
         KeyConditionExpression : "userID = :userID",
         ExpressionAttributeValues : {
-            ":userID" : "100",
+            ":userID" : event.requestContext.identity.cognitoIdentityId,
         },
     };
 

@@ -9,7 +9,7 @@ export async function create(event, context) {
         TableName: process.env.tableName,
         Item: {
             // attributes of item to be created
-            userID: "100", // user id from the authentication
+            userID: event.requestContext.identity.cognitoIdentityId, // user id from the authentication
             noteID: uuid.v1(), // unique identifier
             content: data.content, //parsed from the body
             attachment: data.attachment, //parsed from the body
