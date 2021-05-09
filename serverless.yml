@@ -42,6 +42,7 @@ functions:
       - http:
           path: v1/notes
           method: POST
+          cors: true
           authorizer: aws_iam
   get:
     handler: src/functions/get.get
@@ -49,6 +50,7 @@ functions:
       - http:
           path: v1/notes/{id}
           method: get
+          cors: true
           authorizer: aws_iam
   list:
     handler: src/functions/list.list
@@ -56,6 +58,7 @@ functions:
       - http:
           path: v1/notes
           method: get
+          cors: true
           authorizer: aws_iam
   update:
     handler: src/functions/update.update
@@ -63,6 +66,7 @@ functions:
       - http:
           path: v1/notes/{id}
           method: put
+          cors: true
           authorizer: aws_iam
   delete:
     handler: src/functions/delete.deleteNote
@@ -70,6 +74,7 @@ functions:
       - http:
           path: v1/notes/{id}
           method: delete
+          cors: true
           authorizer: aws_iam
 # you can add CloudFormation resource templates here
 #resources:
@@ -90,3 +95,7 @@ plugins:
   - serverless-bundle
   - serverless-offline
   - serverless-dotenv-plugin
+
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}
