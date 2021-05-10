@@ -1,8 +1,8 @@
 import  uuid from 'uuid';
+import handler from "./libs/handler-lib";
 import dynamoDB from './libs/dynamodb-lib';
 
-
-export async function create(event, context) {
+export const create = handler(async (event, context) => {
     const data = JSON.parse(event.body);
 
     const params = {
@@ -17,19 +17,7 @@ export async function create(event, context) {
         },
     };
 
-
-try {
     await dynamoDB.put(params);
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(params.Item),
-    };
-}   catch (e) {
-    return {
-        statusCode: 500,
-        body: JSON.stringify({ error: e.message }),
-    };
-}
-
-}
+    return params.Item;
+});

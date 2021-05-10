@@ -1,19 +1,21 @@
-import dynamoDb from './libs/dynamodb-lib';
+import handler from "./libs/handler-lib";
+import dynamoDb from "./libs/dynamodb-lib";
 
-export async function get(event, context) {
-    const params = {
-        TableName : process.env.tableName,
-        Key : {
-            userID: event.requestContext.identity.cognitoIdentityId,
-            noteID: event.pathParameters.id,
-        },
-    };
+export const get = handler(async (event, context) => {
+  const params = {
+    TableName: process.env.tableName,
+    // 'Key' defines the partition key and sort key of the item to be retrieved
+    Key: {
+      userID: event.requestContext.identity.cognitoIdentityId, // The id of the author
+      noteID: event.pathParameters.id, // The id of the note from the path
+    },
+  };
 
-    const result = await dynamoDb.get(params);
+  const result = await dynamoDb.get(params);
+  if (!result.Item) {
+    throw new Error("Item not found.");
+  }
 
-    if (!result.Item){
-        throw new Error("Item not found");
-    }
-
-    return result.Item;
-};
+  // Return the retrieved item
+  return result.Item;
+});
